@@ -1,0 +1,27 @@
+import java.util.Scanner;
+public class CreditLimitCalculator {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		  Scanner sc = new Scanner(System.in);
+		  System.out.println("Enter the acccunt number");
+		  int Accuntnumber= sc.nextInt();
+		  while(Accuntnumber!=-1) {
+			  System.out.println("Enter the Amount of the Biggining");
+			  int Bigamount=sc.nextInt();
+			  System.out.println("Enter the amount charge");
+			  int charge=sc.nextInt();
+			  System.out.println("Enetr the creadit amount in month ");
+			  int cridite=sc.nextInt();
+			  System.out.println("Enetr the allow the credit limit");
+			  int cridlimit=sc.nextInt();
+			  int newBlance=Bigamount+charge-cridite;
+			  if(newBlance>cridlimit) {
+				  System.out.println("limite extended");
+			  }
+			  System.out.println();
+		  }
+		  
+	}
+
+}
