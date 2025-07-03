@@ -1,0 +1,244 @@
+public class MyDate {
+    private int day;
+    private int month;
+    private int year;
+    
+    public MyDate(int day, int month,int year) {
+    	this.day=day;
+    	this.month=month;
+    	this.year=year;  	
+    }
+    public int getday() {
+    	return day;
+    }
+    public int getmonth() {
+    	return month;
+    }
+    public int getyear() {
+    	return year;
+    }
+    public void setday(int day) {
+    	this.day=day;
+    }
+    public void setmonth(int month) {
+    	this.month=month;
+    }
+    public void setyear(int year) {
+    	this.year=year;
+    } 
+    public String toString() {
+    	return String.format("%02d-%02d-%04d", day, month, year);
+    }
+		
+}
+//Purson class
+
+public class Purson {
+	public String name;
+	public MyDate dateOfBirth;
+	
+	public Purson(String name,MyDate dateOfBirth) {
+		this.name=name;
+		this.dateOfBirth=dateOfBirth;
+	}
+	public String getname() {
+		return name;
+	}
+	public MyDate getdateOfBirth() {
+		return dateOfBirth;
+	}
+	public void setname(String name) {
+		this.name=name;
+	}
+	public void setdateOfBirth(MyDate dateOfBirth) {
+		this.dateOfBirth=dateOfBirth;
+	}
+	public String toString() {
+        return "Name: " + name + ", DOB: " + dateOfBirth;
+    }
+
+}
+// Employee class
+public class Employee extends Purson {
+	 public int id;
+	 public String department;
+	 public double salary;
+	 public MyDate dateOfJoining;
+	 
+	 public Employee(String name, MyDate dateOfBirth, int id, String department, double salary, MyDate dateOfJoining)  {
+		 super(name, dateOfBirth);
+		 this.id=id;
+		 this.department=department;
+		 this.salary=salary;
+		 this.dateOfJoining=dateOfJoining;
+	 }
+	 public int getid() {
+		 return id;
+	 }
+	 public String getdepartment() {
+		 return department;
+	 }
+	 public double getsalary() {
+		 return salary;
+	 }
+	 public MyDate getdateOfJoining() {
+		 return dateOfJoining;
+	 }
+	 public void setid(int id) {
+		 this.id=id;
+	 }
+	 public void setdepartment(String department) {
+		 this.department=department;
+	 }
+	 public void setsalary(double salary) {
+		 this.salary=salary;
+	 }
+	 public void setdateOfJoining(MyDate dateOfJoining) {
+		 this.dateOfJoining=dateOfJoining;
+	 }
+	 public String toString() {
+	        return "id: " + id + ", department: " + department+",salary: " + salary + ", dateOfJoining: " + dateOfJoining;
+	    }
+	 
+}
+//main code
+import java.util.Scanner;
+
+public class EmployeeManagementSystem {
+    private static Employee[] employees = new Employee[10];
+    private static int count = 0;
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("\n--- Employee Management Menu ---");
+            System.out.println("1. Add Employee");
+            System.out.println("2. Display All Employees");
+            System.out.println("3. Search Employee by ID");
+            System.out.println("4. Display Employees Joined in Given Year");
+            System.out.println("5. Find Employee with Maximum Salary");
+            System.out.println("6. Find Employee with Minimum Salary");
+            System.out.println("7. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1 : addEmployee(sc);
+                case 2 : displayAllEmployees();
+                case 3 : searchEmployeeById(sc);
+                case 4 : displayEmployeesByJoinYear(sc);
+                case 5 : findMaxSalaryEmployee();
+                case 6 : findMinSalaryEmployee();
+                case 7 : System.out.println("Exiting...");
+                default : System.out.println("Invalid choice!");
+            }
+        } while (choice != 7);
+
+        sc.close();
+    }
+
+    private static void addEmployee(Scanner sc) {
+        if (count >= employees.length) {
+            System.out.println("Employee array is full!");
+            return;
+        }
+
+        sc.nextLine();  // consume newline left-over
+        System.out.print("Enter employee name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter date of birth : ");
+        MyDate dob = new MyDate(sc.nextInt(), sc.nextInt(), sc.nextInt());
+
+        System.out.print("Enter employee ID: ");
+        int id = sc.nextInt();
+
+        sc.nextLine();  // consume newline
+        System.out.print("Enter department: ");
+        String department = sc.nextLine();
+
+        System.out.print("Enter salary: ");
+        double salary = sc.nextDouble();
+
+        System.out.print("Enter date of joining (dd mm yyyy): ");
+        MyDate doj = new MyDate(sc.nextInt(), sc.nextInt(), sc.nextInt());
+
+        employees[count++] = new Employee(name, dob, id, department, salary, doj);
+        System.out.println("Employee added successfully!");
+    }
+
+    private static void displayAllEmployees() {
+        if (count == 0) {
+            System.out.println("No employees to display.");
+            return;
+        }
+
+        for (int i = 0; i < count; i++) {
+            System.out.println(employees[i]);
+        }
+    }
+
+    private static void searchEmployeeById(Scanner sc) {
+        System.out.print("Enter Employee ID to search: ");
+        int searchId = sc.nextInt();
+
+        for (int i = 0; i < count; i++) {
+            if (employees[i].getid() == searchId) {
+                System.out.println(employees[i]);
+                return;
+            }
+        }
+        System.out.println("Employee not found.");
+    }
+
+    private static void displayEmployeesByJoinYear(Scanner sc) {
+        System.out.print("Enter Year: ");
+        int year = sc.nextInt();
+        boolean found = false;
+
+        for (int i = 0; i < count; i++) {
+            if (employees[i].getdateOfJoining().getyear() == year) {
+                System.out.println(employees[i]);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No employees found who joined in year " + year);
+        }
+    }
+
+    private static void findMaxSalaryEmployee() {
+        if (count == 0) {
+            System.out.println("No employees available.");
+            return;
+        }
+
+        Employee maxEmp = employees[0];
+        for (int i = 1; i < count; i++) {
+            if (employees[i].getsalary() > maxEmp.getsalary()) {
+                maxEmp = employees[i];
+            }
+        }
+        System.out.println("Employee with maximum salary:");
+        System.out.println(maxEmp);
+    }
+
+    private static void findMinSalaryEmployee() {
+        if (count == 0) {
+            System.out.println("No employees available.");
+            return;
+        }
+
+        Employee minEmp = employees[0];
+        for (int i = 1; i < count; i++) {
+            if (employees[i].getsalary() < minEmp.getsalary()) {
+                minEmp = employees[i];
+            }
+        }
+        System.out.println("Employee with minimum salary:");
+        System.out.println(minEmp);
+    }
+}
