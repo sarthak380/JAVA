@@ -1,0 +1,17 @@
+
+public class reverse_String {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+         String a="sarthak";
+         String reversed=" ";
+         int b=a.length()-1;
+         while(b>=0) {
+        	 reversed = reversed + a.charAt(b);
+        	 b--;
+         }
+         System.out.println("Reversed string: " + reversed);
+        
+	}
+
+}
